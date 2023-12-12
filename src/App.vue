@@ -1,26 +1,65 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+    <h1>Список дел 🎉</h1>
+    <TodoForm @add="addTodo" />
+    <div class="filter-container">
+      <label>Фильтер: </label>
+      <input v-model="filterText" type="text" />
+    </div>
+    <TodoList :todos="todos" :filterText="filterText" @delete="deleteTodo" />
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TodoForm from './components/TodoForm.vue';
+import TodoList from './components/TodoList.vue';
 
 export default {
-  name: 'App',
+  data() {
+    return {
+      todos: [],
+      filterText: '',
+    };
+  },
+  methods: {
+    addTodo(newTodo) {
+      this.todos.push({ title: newTodo });
+    },
+    deleteTodo(index) {
+      this.todos.splice(index, 1);
+    },
+  },
   components: {
-    HelloWorld
-  }
-}
+    TodoForm,
+    TodoList,
+  },
+};
 </script>
 
 <style>
+/* New Year's theme styles */
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Arial', sans-serif;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  margin: 20px;
+  background-color: #f1c40f; /* Golden Yellow */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+h1 {
+  color: #e74c3c; /* Red */
+}
+
+.filter-container {
+  margin-bottom: 10px;
+}
+
+input {
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
 </style>
